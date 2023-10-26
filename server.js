@@ -8,7 +8,7 @@ app.use(express.json())
 let persons = [
     { 
         "id": 1,
-        "name": "Arto Hellas", 
+        "name": "Artos Hellas", 
         "number": "040-123456"
       },
       { 
