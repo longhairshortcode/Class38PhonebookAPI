@@ -1,10 +1,34 @@
-const express = require('express')
-const app = express()
+// all the const/requirement codes 
+const express = require('express');
+const app = express();
 const PORT = 7070
+const morgan = require('morgan');
 
-app.use(express.json())
 
 
+
+// Define a custom token to log request body data
+morgan.token('postData', (req) => {
+  // Check if it's a POST request and if there's a request body
+  if (req.method === 'POST' && req.body) {
+    // Use JSON.stringify to convert the request body to a string
+    return JSON.stringify(req.body);
+  } else {
+    return '-';
+  }
+});
+
+
+
+
+//all the app.use codes
+app.use(express.json());
+
+app.use(morgan('tiny'));
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postData'));
+
+
+//my persons object that the API will get data from/ routes will get info from
 let persons = [
     { 
         "id": 1,
@@ -34,14 +58,9 @@ let persons = [
 
     ]
 
-// Create a route for /info
+  
 
-// app.get('/info', (req, res)=> {
-//   const currentTime = new Date().toString();
-//   const entryCount = phonebook.length;
-//   res.sendFile(__dirname + '/info.html');
-// });
-
+// GET route for /info
 app.get('/info', (req, res) => {
   const currentTime = new Date().toString();
   const entryCount = persons.length;
@@ -63,7 +82,10 @@ app.get('/info', (req, res) => {
   res.send(htmlResponse);
 });
 
-    //get all persons API
+
+
+
+//get all persons API
 app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
@@ -71,7 +93,6 @@ app.get('/api/persons', (req, res) => {
 
 
 // Get individual person info from API
-
 app.get('/api/persons/:id', (req, res) => {
   const id = Number(req.params.id)
   const person = persons.find(person => person.id === id);
@@ -90,7 +111,6 @@ app.get('/api/persons/:id', (req, res) => {
 //add a new person into the api via POST
 
 //first generate an ID:
-
 const generateId = () => {
 const maxId = persons.length > 0
 ? Math.max(...persons.map(person => person.id))
@@ -131,7 +151,6 @@ if (persons.find((person) => person.name === body.name)) {
 
 
 //delete an individual person info
-
 app.delete('/api/persons/:id', (req, res) => {
 const id = Number(req.params.id)
 persons = persons.filter(person => person.id !== id)
@@ -139,6 +158,7 @@ response.status(204).end()
 })
 
 
+//app.listen 
 app.listen(PORT, () =>{
     console.log(`The server is running on ${PORT}`)
 })
