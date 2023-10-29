@@ -53,7 +53,7 @@ let persons = [
       },
       {
       "id": 5,
-      "name": "Mary Poppendieck Jr.", 
+      "name": "Mary Poppendieck Junior", 
       "number": "39-23-6423123"
     }
 
