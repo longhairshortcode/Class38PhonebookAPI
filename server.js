@@ -33,7 +33,7 @@ pp.use(morgan(':method :url :status :res[content-length] - :response-time ms :po
 let persons = [
     { 
         "id": 1,
-        "name": "Artos Hellas", 
+        "name": "Arto Hellas", 
         "number": "040-123456"
       },
       { 
