@@ -161,5 +161,5 @@ response.status(204).end()
 
 //app.listen 
 app.listen(PORT, () =>{
-    console.log(`The server is running on ${PORT}`)
+    console.log(`The server is running on port ${PORT}`)
 })
